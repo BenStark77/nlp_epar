@@ -268,7 +268,7 @@ def plot_learning_curves_nn(model):
 
 
 # load data
-data_sheet1 = pd.read_excel(r"C:\Users\debstar1\Downloads\privat\temp\Szenario Data Scientist\sentences_with_sentiment_final.xlsx")
+data_sheet1 = pd.read_excel(r"C:\Users\Benjamin\Szenario Data Scientist\sentences_with_sentiment_final.xlsx")
 
 # create one class column
 data_sheet1['class'] = "-"
@@ -298,13 +298,13 @@ seed(77)
 # bag of words (with and without ngrams), tf-idf (with and without ngrams), word embedding via pre-built model by google, word embedding via self-built model
 strategies = ['bow-ngram','tfidf-ngram','bow-no','tfidf-no','bow-tf-idf-ngram', 'bow-tf-idf-no', 'word_indexing','word_to_vec_google','word_to_vec_self']
 
-# load word2vec model from google
-model_google = gensim.models.KeyedVectors.load_word2vec_format(r'C:\Users\debstar1\Downloads\GoogleNews-vectors-negative300.bin', binary=True)
+# load word2vec model from google, available at: https://github.com/mmihaltz/word2vec-GoogleNews-vectors
+model_google = gensim.models.KeyedVectors.load_word2vec_format(r'C:\Users\Benjamin\Szenario Data Scientist\GoogleNews-vectors-negative300.bin', binary=True)
 
 all_models_word2vec = [define_word2vec(data_sheet1['Sentence_prep_stemm']), define_word2vec(data_sheet1['Sentence_prep_lemm']),
                        define_word2vec(data_sheet1['Sentence'])]
 
-embedding_dim = 300 #300 #50
+embedding_dim = 300 #50
 results = {}
 
 Xs = [data_sheet1['Sentence_prep_stemm'], data_sheet1['Sentence_prep_lemm'], data_sheet1['Sentence']]
@@ -422,9 +422,9 @@ for ind_X, X in enumerate(Xs):
                                        'recall':np.mean(recall_score_list),'f1':np.mean(f1_score_list)}
 
 
-# STILL TO DO: HYPERPARAMETER OPTIMIZATION
+# STILL TO DO: HYPERPARAMETER OPTIMIZATION ESPECIALLY W.R.T OVERFITTING
 
 df_res = pd.DataFrame(results)
 df_res = df_res.transpose()
 
-df_res.to_excel("res_nlp_all_final.xlsx")
+df_res.to_excel("res_nlp_all_final_all_2.xlsx")
